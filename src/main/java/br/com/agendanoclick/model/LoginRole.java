@@ -10,7 +10,6 @@ public enum LoginRole {
     }
 
     public void setValue(String value) {
-        // do nothing
     }
 }
 

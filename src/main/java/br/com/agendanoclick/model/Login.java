@@ -1,5 +1,7 @@
 package br.com.agendanoclick.model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -11,6 +13,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -26,6 +29,42 @@ public class Login {
 
     @Enumerated(EnumType.STRING)
     private LoginRole role;
+
+    private Boolean is_active;
+    
+    private LocalDate created_at;
+
+    private LocalDateTime last_login;
+
+    @OneToOne(mappedBy = "login_id")
+    private User user;
+
+    @OneToOne(mappedBy = "login_id")
+    private Professional professional;
+
+    public Boolean getIs_active() {
+        return is_active;
+    }
+
+    public void setIs_active(Boolean is_active) {
+        this.is_active = is_active;
+    }
+
+    public LocalDate getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(LocalDate created_at) {
+        this.created_at = created_at;
+    }
+
+    public LocalDateTime getLast_login() {
+        return last_login;
+    }
+
+    public void setLast_login(LocalDateTime last_login) {
+        this.last_login = last_login;
+    }
 
     public Long getId() {
         return id;
