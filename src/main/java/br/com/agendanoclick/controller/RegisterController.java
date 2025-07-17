@@ -6,7 +6,8 @@ import br.com.agendanoclick.dto.RegisterProfessionalDTO;
 import br.com.agendanoclick.dto.RegisterUserDTO;
 import br.com.agendanoclick.model.Login;
 import br.com.agendanoclick.model.LoginRole;
-import br.com.agendanoclick.repository.LoginRepository;
+import br.com.agendanoclick.model.User;
+import br.com.agendanoclick.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class RegisterController {
 
     @Autowired
-    LoginRepository loginRepository;
+    UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -26,10 +27,20 @@ public class RegisterController {
     @PostMapping("/user/register")
     public String registerUser(@RequestBody RegisterUserDTO register) {
         Login newLogin = new Login();
+        User newUser = new User();
+
         newLogin.setEmail(register.email());
         newLogin.setPassword(passwordEncoder.encode(register.password()));
         newLogin.setRole(LoginRole.valueOf(register.role()));
-        loginRepository.save(newLogin);
+
+        newUser.setName(register.name());
+        newUser.setPhone(register.phone());
+        newUser.setCpf(register.cpf());
+        newUser.setBirth_day(register.birth_day());
+
+        newUser.setLogin(newLogin);
+        newLogin.setUser(newUser);
+        userRepository.save(newUser);
         return "";
     }
 

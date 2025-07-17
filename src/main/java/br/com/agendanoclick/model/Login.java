@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -36,11 +37,27 @@ public class Login {
 
     private LocalDateTime last_login;
 
-    @OneToOne(mappedBy = "login_id")
+    @OneToOne(mappedBy = "login", cascade = CascadeType.ALL)
     private User user;
 
-    @OneToOne(mappedBy = "login_id")
+    @OneToOne(mappedBy = "login", cascade = CascadeType.ALL)
     private Professional professional;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Professional getProfessional() {
+        return professional;
+    }
+
+    public void setProfessional(Professional professional) {
+        this.professional = professional;
+    }
 
     public Boolean getIs_active() {
         return is_active;

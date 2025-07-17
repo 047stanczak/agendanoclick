@@ -1,5 +1,7 @@
 package br.com.agendanoclick.dto;
 
-public record RegisterUserDTO(String email, String password, String role) {
+import java.time.LocalDate;
+
+public record RegisterUserDTO(String email, String password, String role, String name, String phone, String cpf, LocalDate birth_day) {
     
 }

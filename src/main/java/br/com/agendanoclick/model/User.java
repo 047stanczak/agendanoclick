@@ -2,22 +2,25 @@ package br.com.agendanoclick.model;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "login_id")
-    private Login login_id;
+    private Login login;
 
     private String name;
 
@@ -35,12 +38,12 @@ public class User {
         this.id = id;
     }
 
-    public Login getLogin_id() {
-        return login_id;
+    public Login getLogin() {
+        return login;
     }
 
-    public void setLogin_id(Login login_id) {
-        this.login_id = login_id;
+    public void setLogin(Login login_id) {
+        this.login = login_id;
     }
 
     public String getName() {
