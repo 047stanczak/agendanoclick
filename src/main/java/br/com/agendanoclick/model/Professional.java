@@ -30,6 +30,10 @@ public class Professional {
 
     private String bio;
 
+    public void setLogin(Login login) {
+        this.login = login;
+    }
+
     public Long getId() {
         return id;
     }

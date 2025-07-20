@@ -6,9 +6,12 @@ import br.com.agendanoclick.dto.RegisterProfessionalDTO;
 import br.com.agendanoclick.dto.RegisterUserDTO;
 import br.com.agendanoclick.model.Login;
 import br.com.agendanoclick.model.LoginRole;
+import br.com.agendanoclick.model.Professional;
 import br.com.agendanoclick.model.User;
+import br.com.agendanoclick.repository.ProfessionalRepository;
 import br.com.agendanoclick.repository.UserRepository;
 
+import java.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +25,9 @@ public class RegisterController {
     UserRepository userRepository;
 
     @Autowired
+    ProfessionalRepository professionalRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @PostMapping("/user/register")
@@ -32,6 +38,8 @@ public class RegisterController {
         newLogin.setEmail(register.email());
         newLogin.setPassword(passwordEncoder.encode(register.password()));
         newLogin.setRole(LoginRole.valueOf(register.role()));
+        newLogin.setCreated_at(LocalDate.now());
+        newLogin.setIs_active(true);
 
         newUser.setName(register.name());
         newUser.setPhone(register.phone());
@@ -46,6 +54,24 @@ public class RegisterController {
 
     @PostMapping("/professional/register")
     public String registerProfessional(@RequestBody RegisterProfessionalDTO register) {
+        Login newLogin = new Login();
+        Professional newProfessional = new Professional();
+
+        newLogin.setEmail(register.email());
+        newLogin.setPassword(passwordEncoder.encode(register.password()));
+        newLogin.setRole(LoginRole.valueOf(register.role()));
+        newLogin.setCreated_at(LocalDate.now());
+        newLogin.setIs_active(true);
+
+        newProfessional.setName(register.name());
+        newProfessional.setPhone(register.phone());
+        newProfessional.setCpf_cnpj(register.cpf_cnpj());
+        newProfessional.setCategory(register.category());
+        newProfessional.setBio(register.bio());
+
+        newProfessional.setLogin(newLogin);
+        newLogin.setProfessional(newProfessional);
+        professionalRepository.save(newProfessional);
         return "";
     }
     

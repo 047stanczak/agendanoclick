@@ -7,6 +7,7 @@ import br.com.agendanoclick.dto.LoginResponse;
 import br.com.agendanoclick.model.Login;
 import br.com.agendanoclick.security.LoginDetails;
 import br.com.agendanoclick.security.TokenService;
+import br.com.agendanoclick.service.LastLoginUpdater;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class LoginController {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private LastLoginUpdater lastLoginUpdater;
     
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginDTO loginDto) {
@@ -36,6 +40,7 @@ public class LoginController {
         Login login = loginDetails.getLogin();
         var token = tokenService.generateToken(login);
 
+        lastLoginUpdater.updateLastLogin(loginDto.email());
 
         return ResponseEntity.ok(new LoginResponse(token));
     }    
