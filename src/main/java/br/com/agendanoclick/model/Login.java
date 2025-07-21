@@ -116,7 +116,7 @@ public class Login {
     }
 
     public List<GrantedAuthority> getAuthorities() {
-        if (this.role == LoginRole.PROFESSIONAL) return List.of(new SimpleGrantedAuthority("ROLE_PROFISSIONAL"));
+        if (this.role == LoginRole.PROFESSIONAL) return List.of(new SimpleGrantedAuthority("ROLE_PROFESSIONAL"));
         else if (this.role == LoginRole.PROFESSIONAL) return List.of(new SimpleGrantedAuthority("ROLE_USUARIO"));
         else return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
     }

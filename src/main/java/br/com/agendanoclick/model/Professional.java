@@ -1,11 +1,14 @@
 package br.com.agendanoclick.model;
 
+import java.util.List;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -30,8 +33,18 @@ public class Professional {
 
     private String bio;
 
+    @OneToOne(mappedBy = "professional", cascade = CascadeType.ALL)
+    private Availability availability;
+
+    @OneToMany(mappedBy = "professional", cascade = CascadeType.ALL)
+    private List<Schedules> schedules;
+
     public void setLogin(Login login) {
         this.login = login;
+    }
+
+    public Login getLogin() {
+        return login;
     }
 
     public Long getId() {

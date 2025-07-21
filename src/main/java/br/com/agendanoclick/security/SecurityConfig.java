@@ -30,6 +30,7 @@ public class SecurityConfig {
         .requestMatchers("/professional/register").permitAll()
         .requestMatchers("/login").permitAll()
         .requestMatchers("/id").permitAll()
+        .requestMatchers("/register/availability").hasRole("PROFESSIONAL")
         .anyRequest().authenticated())
         .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
             .build();
